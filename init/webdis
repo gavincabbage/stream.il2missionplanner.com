@@ -1,0 +1,45 @@
+#!/bin/sh
+#
+# /etc/init.d/webdis
+# Subsystem file for "webdis" server
+#
+# chkconfig: 2345 95 05
+# description: webdis server daemon
+#
+# processname: webdis
+# pidfile: /etc/run/webdis.pid
+
+EXEC="/usr/local/bin/webdis /etc/webdis/webdis.json"
+PIDFILE=/var/run/webdis.pid
+
+case "$1" in
+    start)
+        if [ -f $PIDFILE ]
+        then
+                echo "$PIDFILE exists, process is already running or crashed"
+        else
+                echo "Starting Webdis server..."
+		$EXEC
+        fi
+        ;;
+    stop)
+        if [ ! -f $PIDFILE ]
+        then
+                echo "$PIDFILE does not exist, process is not running"
+        else
+                PID=$(cat $PIDFILE)
+                echo "Stopping ..."
+                kill -9 $PID
+		rm -f $PIDFILE
+                #while [ -x $PIDFILE]
+                #do
+                #    echo "Waiting for Webdis to shutdown ..."
+                #    sleep 1
+                #done
+                echo "Webdis stopped"
+        fi
+        ;;
+    *)
+        echo "Please use start or stop as first argument"
+        ;;
+esac
