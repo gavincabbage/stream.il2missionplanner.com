@@ -11,7 +11,7 @@ if redis.call('EXISTS', 'stream:' .. streamName) == 0 then
     return 2
 end
 
-local streamKey = 'stream' .. streamName
+local streamKey = 'stream:' .. streamName
 local fields = redis.call('HMGET', streamKey, 'pw', 'code', 'channel')
 
 if password ~= fields[1] or code ~= fields[2] then
