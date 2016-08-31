@@ -1,16 +1,18 @@
 #!/bin/sh
 #
-# /etc/init.d/webdis
-# Subsystem file for "webdis" server
+# /etc/init.d/redsmin
+# Subsystem file for "redsmin" server
 #
 # chkconfig: 2345 95 05
-# description: webdis server daemon
+# description: redsmin server daemon
 #
-# processname: webdis
-# pidfile: /etc/run/webdis.pid
+# processname: redsmin
+# pidfile: /etc/run/redsmin.pid
+# config: /etc/redmins/redsmin.json
 
-EXEC="/usr/local/bin/webdis /etc/webdis/webdis.json"
-PIDFILE=/var/run/webdis.pid
+set CONFIG_FILE=/etc/redsmin/redsmin.json
+EXEC="/usr/bin/redsmin &"
+PIDFILE=/var/run/redsmin.pid
 
 case "$1" in
     start)
@@ -18,7 +20,7 @@ case "$1" in
         then
                 echo "$PIDFILE exists, process is already running or crashed"
         else
-                echo "Starting Webdis server..."
+                echo "Starting Redsmin proxy server..."
 		$EXEC
         fi
         ;;
@@ -29,9 +31,9 @@ case "$1" in
         else
                 PID=$(cat $PIDFILE)
                 echo "Stopping ..."
-                killall webdis
+                killall redsmin
 		rm -f $PIDFILE
-                echo "Webdis stopped"
+                echo "Redsmin stopped"
         fi
         ;;
     *)
