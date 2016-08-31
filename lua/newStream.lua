@@ -2,12 +2,13 @@ local streamName = ARGV[1]
 local password = ARGV[2]
 local code = ARGV[3]
 
-function buildChannelName(streamName)
+local function buildChannelName(streamName)
     local s = streamName
     for i = 1, 8 do
         s = s .. string.char(math.random(48, 57))
     end
     return s
+end
 
 if not streamName or not password or not code then
     return 1
