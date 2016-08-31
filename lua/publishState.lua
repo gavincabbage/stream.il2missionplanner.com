@@ -19,6 +19,6 @@ if password ~= fields[1] or code ~= fields[2] then
 end
 
 redis.call('HSET', streamKey, 'state', state)
-redis.call('PUBLISH', channel, state)
+redis.call('PUBLISH', fields[3], state)
 
 return 0
