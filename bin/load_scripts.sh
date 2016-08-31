@@ -13,5 +13,5 @@ do
 	echo $filename
 	hashcode=`redis-cli script load "$(cat $f)"`
 	echo $hashcode
-	redis-cli hset myScripts $filename $hashcode
+	redis-cli hset scripts $filename $hashcode
 done
