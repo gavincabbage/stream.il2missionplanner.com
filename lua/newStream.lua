@@ -14,7 +14,7 @@ if not streamName or not password or not code then
     return 1
 end
 
-if redis.call('EXISTS', 'stream:' .. streamName) then
+if redis.call('EXISTS', 'stream:' .. streamName) ~= 0 then
     return 2
 end
 
