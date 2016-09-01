@@ -14,5 +14,4 @@ if expectedPassword ~= password then
     return 3
 end
 
-local channel = redis.call('HGET', streamName, 'channel')
-return channel
+return redis.call('HMGET', streamName, 'channel', 'state')
