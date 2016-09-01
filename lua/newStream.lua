@@ -1,6 +1,7 @@
 local streamName = ARGV[1]
 local password = ARGV[2]
 local code = ARGV[3]
+local state = ARGV[4]
 
 local function buildChannelName(streamName)
     local s = streamName
@@ -10,7 +11,7 @@ local function buildChannelName(streamName)
     return s
 end
 
-if not streamName or not password or not code then
+if not streamName or not password or not code or not state then
     return 1
 end
 
@@ -21,6 +22,6 @@ end
 local channel = buildChannelName(streamName)
 
 redis.call('HMSET', 'stream:' .. streamName, 'name', streamName, 'pw', password,
-        'code', code, 'channel', channel, 'state', '')
+        'code', code, 'channel', channel, 'state', state)
 
 return channel
