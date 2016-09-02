@@ -4,7 +4,8 @@ local code = ARGV[3]
 local state = ARGV[4]
 
 local function setupPRNG()
-    math.randomseed(os.time())
+    local time = redis.call('time')[1]
+    math.randomseed(time)
     math.random(); math.random(); math.random()
 end
 
