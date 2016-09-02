@@ -26,7 +26,7 @@ end
 
 setupPRNG()
 local channel = buildChannelName(streamName)
-if not channel
+if not channel then
     return 3
 end
 
