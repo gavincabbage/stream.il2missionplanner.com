@@ -12,9 +12,9 @@ local function setupPRNG()
 end
 
 local function buildChannelName(streamName)
-    local s = streamName
-    for i = 1, 16 do
-        s = s .. ':' .. string.char(math.random(48, 57))
+    local s = streamName .. ':'
+    for i = 1, 32 do
+        s = s .. string.char(math.random(48, 57))
     end
     return s
 end
