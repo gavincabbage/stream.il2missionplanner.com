@@ -33,7 +33,9 @@ if not channel then
     return 3
 end
 
-redis.call('HMSET', 'stream:' .. streamName, 'name', streamName, 'pw', password,
+local streamKey = 'stream:' .. streamName
+redis.call('HMSET', streamKey, 'name', streamName, 'pw', password,
         'code', code, 'channel', channel, 'state', state)
+redis.call('EXPIRE', streamKey, 10800)
 
 return channel

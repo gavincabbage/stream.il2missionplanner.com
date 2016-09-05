@@ -20,5 +20,6 @@ end
 
 redis.call('HSET', streamKey, 'state', state)
 redis.call('PUBLISH', fields[3], state)
+redis.call('EXPIRE', streamKey, 10800)
 
 return 0
