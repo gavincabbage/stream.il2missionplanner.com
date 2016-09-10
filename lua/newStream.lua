@@ -20,17 +20,17 @@ local function buildChannelName(streamName)
 end
 
 if not streamName or not password or not code or not state then
-    return {'ERROR', 'All fields are required.'}
+    return {'ERROR', 'All fields are required. Please try again.'}
 end
 
 if redis.call('EXISTS', 'stream:' .. streamName) ~= 0 then
-    return {'ERROR', 'A stream with that name already exists.'}
+    return {'ERROR', 'A stream with that name already exists. Try a different name.'}
 end
 
 setupPRNG()
 local channel = buildChannelName(streamName)
 if not channel then
-    return {'ERROR', 'Problem creating stream channel. Try again.'}
+    return {'ERROR', 'Problem creating stream channel. Please try again.'}
 end
 
 local streamKey = 'stream:' .. streamName

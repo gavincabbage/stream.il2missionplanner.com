@@ -2,18 +2,20 @@ local streamName = ARGV[1]
 local password = ARGV[2]
 
 if not streamName or not password then
-    return 1
+    return {'ERROR', 'All fields are required. Please try again.'}
 end
 
 local streamKey = 'stream:' .. streamName
 
 local expectedPassword = redis.call('HGET', streamKey, 'pw')
-if not password then
-    return 2
+if not expectedPassword then
+    return {'ERROR', 'Problem retrieving stored password. Please try again.'}
 end
 
 if expectedPassword ~= password then
-    return 3
+    return {'ERROR', 'Incorrect password.'}
 end
 
-return redis.call('HMGET', streamKey, 'channel', 'state')
+local streamInfo = redis.call('HMGET', streamKey, 'channel', 'state')
+
+return {'SUCCESS', streamInfo[1], streamInfo[2]}
