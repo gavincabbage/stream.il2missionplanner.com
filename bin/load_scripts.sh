@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# go through lua directory
-# load each script
-# save hash as name of script key
-
 # run from stream.il2missionplanner.com top level directory
 
 echo "Loading scripts..."
