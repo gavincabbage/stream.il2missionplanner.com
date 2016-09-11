@@ -1,3 +1,5 @@
+local scriptName = 'publishState'
+
 local streamName = ARGV[1]
 local password = ARGV[2]
 local code = ARGV[3]
@@ -18,8 +20,13 @@ if password ~= fields[1] or code ~= fields[2] then
     return {'ERROR', 'Password or leader code incorrect.'}
 end
 
+local ttl = redis.call('get', 'stream_ttl')
+if not ttl then
+    ttl = 10800 -- fall back to default
+end
+
 redis.call('HSET', streamKey, 'state', state)
 redis.call('PUBLISH', fields[3], state)
-redis.call('EXPIRE', streamKey, 10800)
+redis.call('EXPIRE', streamKey, ttl)
 
 return {'SUCCESS'}

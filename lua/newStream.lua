@@ -1,4 +1,6 @@
-redis.replicate_commands()
+redis.replicate_commands() -- required to for write commands after calling time
+
+local scriptName = 'newStream'
 
 local streamName = ARGV[1]
 local password = ARGV[2]
@@ -33,9 +35,14 @@ if not channel then
     return {'ERROR', 'Problem creating stream channel. Please try again.'}
 end
 
+local ttl = redis.call('get', 'stream_ttl')
+if not ttl then
+    ttl = 10800 -- fall back to default
+end
+
 local streamKey = 'stream:' .. streamName
 redis.call('HMSET', streamKey, 'name', streamName, 'pw', password,
         'code', code, 'channel', channel, 'state', state)
-redis.call('EXPIRE', streamKey, 10800)
+redis.call('EXPIRE', streamKey, ttl)
 
 return {'SUCCESS'}

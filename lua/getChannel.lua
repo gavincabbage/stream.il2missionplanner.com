@@ -1,3 +1,5 @@
+local scriptName = 'getChannel'
+
 local streamName = ARGV[1]
 local password = ARGV[2]
 

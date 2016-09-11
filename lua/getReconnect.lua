@@ -1,3 +1,5 @@
+local scriptName = 'getReconnect'
+
 local streamName = ARGV[1]
 local password = ARGV[2]
 local code = ARGV[3]
